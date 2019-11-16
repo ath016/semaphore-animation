@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Semaphore</title>
+	<style type="text/css">
+		body {
+			margin: 0;
+			background-color: black;
+		}
+		
+		div {
+			padding: 5px;
+			text-align: center;
+		}
+		
+		p {
+			display: inline;
+			color: white;
+			font-weight: bold;
+		}
+		
+		input[type=text] {
+			padding: 2px;
+			border: 1px solid black;
+			background-color: white;
+			color: black;
+		}
+		
+		input[type=text]:focus {
+			outline: none;
+		}
+		
+		button{
+			border: 1px solid white;
+			background-color: black;
+			color: white;
+			font-weight: bold;
+		}
+		
+		button:focus {
+			outline: none;
+		}
+			
+		canvas {
+			display: block;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<p>String: </p>
+		<input type='text' id='text' value=' thy is awesome'>
+		<button id="change" onclick='handleChange()'>Change String</button>
+		<button id="string" onclick='handleString()'>String Mode</button>
+		<button id="random" onclick='handleRandom()'>Random Mode</button>
+		<p id='speed'>Speed: 2000 ms</p>
+		<button id="slow" onclick='handleSlow()'>Slower</button>
+		<button id="fast" onclick='handleFast()'>Faster</button>
+	</div>
+	<canvas/>
+	<script src="canvas.js"></script>
+</body>
+</html>
