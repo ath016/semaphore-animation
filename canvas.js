@@ -330,12 +330,28 @@ function Semaphore(x, y, size) {
 // initiation
 function init() {
 	// set canvas dimension
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight - 32 * display;
+	canvas.width = window.innerWidth - 1;
+	canvas.height = window.innerHeight - document.getElementById('menu').clientHeight - 1;
 	
 	const min = Math.min(canvas.width, canvas.height);
 	
 	semaphore.resize(canvas.width / 2 - min / 2, 0, min);
+
+	let search = location.href.split('?')[1];
+
+	if(search) search = search.split('#')[0];
+	if(search) {
+		search = search.split('&')
+			.map((x) => x.split('='))
+			.reduce((t,s) => {
+				t.set(s[0], s[1]);
+				return t;
+			}, new Map())
+	} // end of if
+	if(search && search.has('m')) {
+		document.getElementById('text').value = decodeURIComponent(search.get('m'));
+		handleChange();
+	} // end of if
 } // end of init
 
 // animation function
@@ -394,7 +410,8 @@ let interval = setInterval(function() {
 //window.clearInterval(interval);
 
 function handleChange() {
-	string = document.getElementById('text').value.toLowerCase();;
+	string = document.getElementById('text').value.toLowerCase().replace(/[^a-z ]/g, '');
+	document.getElementById('text').value = string;
 	random = false;
 	frame = 0;
 } // end of hangle change
@@ -419,6 +436,11 @@ function handleFast() {
 	if(duration > 500) duration -= 100;
 	document.getElementById('speed').innerHTML = 'Speed: ' + duration + ' ms';
 	frame = 0;
+} // end of handle fast
+
+function handleCopy() {
+	handleChange();
+	navigator.clipboard.writeText(location.href + '?m=' + encodeURIComponent(string));
 } // end of handle fast
 
 window.addEventListener('resize', function() {
