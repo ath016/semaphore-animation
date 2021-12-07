@@ -440,7 +440,7 @@ function handleFast() {
 
 function handleCopy() {
 	handleChange();
-	navigator.clipboard.writeText(location.href + '?m=' + encodeURIComponent(string));
+	navigator.clipboard.writeText(location.origin + location.pathname + '?m=' + encodeURIComponent(string));
 } // end of handle fast
 
 window.addEventListener('resize', function() {
