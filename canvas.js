@@ -9,6 +9,7 @@ const semaphore = new Semaphore(0, 0, 100);
 // interval
 let string = ' thy is awesome'
 let random = false;
+let randomString = '';
 let frame = 0;
 let duration = 2000
 let refresh = 60;
@@ -327,6 +328,23 @@ function Semaphore(x, y, size) {
 
 /* FUNCTIONS **************************************************** */
 
+// set random string
+function setRandomString() {
+	let alpha = [
+		'a','b','c','d','e','f','g','h','i','j',
+		'k','l','m','n','o','p','q','r','s','t',
+		'u','v','w','x','y','z'
+	];
+
+	// empty random string
+	randomString = '';
+
+	// fill random string
+	while(alpha.length) {
+		randomString += alpha.splice(Math.floor(Math.random() * alpha.length), 1)[0];
+	} // end of while
+} // end of set random string
+
 // initiation
 function init() {
 	// set canvas dimension
@@ -352,6 +370,9 @@ function init() {
 		document.getElementById('text').value = decodeURIComponent(search.get('m'));
 		handleChange();
 	} // end of if
+
+	// set random string
+	setRandomString();
 } // end of init
 
 // animation function
@@ -392,15 +413,17 @@ c.roundRect = function(x, y, width, height, radius) {
 /* EVENT ******************************************************** */
 
 // interal
-let interval = setInterval(function() {
-	const alpha = [
-		'a','b','c','d','e','f','g','h','i','j',
-		'k','l','m','n','o','p','q','r','s','t',
-		'u','v','w','x','y','z'
-	];
-	
-	if((frame/refresh) % (duration/1000) == 0 && random)
-		semaphore.set(alpha[Math.floor(Math.random() * alpha.length)]);
+let interval = setInterval(function() {	
+	// set random letter
+	if((frame/refresh) % (duration/1000) == 0 && random) {
+		semaphore.set(randomString[frame/refresh/duration*1000 % randomString.length]);
+
+		if(frame/refresh/duration*1000 % randomString.length == 0) {
+			setRandomString();
+		} // end of if
+	} // end of if
+
+	// set string letter
 	if((frame/refresh) % (duration/1000) == 0 && !random)
 		semaphore.set(string[frame/refresh/duration*1000 % string.length]);
 	
@@ -422,6 +445,7 @@ function handleString() {
 } // end of hangle string
 
 function handleRandom() {
+	setRandomString()
 	random = true;
 	frame = 0;
 } // end of hangle random
