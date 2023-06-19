@@ -370,9 +370,6 @@ function init() {
 		document.getElementById('text').value = decodeURIComponent(search.get('m'));
 		handleChange();
 	} // end of if
-
-	// set random string
-	setRandomString();
 } // end of init
 
 // animation function
