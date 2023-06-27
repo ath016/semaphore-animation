@@ -410,19 +410,22 @@ c.roundRect = function(x, y, width, height, radius) {
 /* EVENT ******************************************************** */
 
 // interal
-let interval = setInterval(function() {	
-	// set random letter
-	if((frame/refresh) % (duration/1000) == 0 && random) {
-		semaphore.set(randomString[frame/refresh/duration*1000 % randomString.length]);
+let interval = setInterval(function() {
+	// step
+	const step = refresh * duration / 1000;
 
-		if(frame/refresh/duration*1000 % randomString.length == 0) {
+	// set random letter
+	if(frame % step == 0 && random) {
+		semaphore.set(randomString[(frame / step) % randomString.length]);
+		
+		if((frame / step) > randomString.length) {
 			setRandomString();
 		} // end of if
 	} // end of if
 
 	// set string letter
-	if((frame/refresh) % (duration/1000) == 0 && !random)
-		semaphore.set(string[frame/refresh/duration*1000 % string.length]);
+	if(frame % step == 0 && !random)
+		semaphore.set(string[(frame / step) % string.length]);
 	
 	semaphore.update(refresh);
 	frame++;
@@ -450,12 +453,14 @@ function handleRandom() {
 function handleSlow() {
 	duration += 100;
 	document.getElementById('speed').innerHTML = 'Speed: ' + duration + ' ms';
+	setRandomString()
 	frame = 0;
 } // end of handle slow
 
 function handleFast() {
 	if(duration > 500) duration -= 100;
 	document.getElementById('speed').innerHTML = 'Speed: ' + duration + ' ms';
+	setRandomString()
 	frame = 0;
 } // end of handle fast
 
