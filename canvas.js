@@ -417,12 +417,13 @@ let interval = setInterval(function() {
 	// set random letter
 	if(frame % step == 0 && random) {
 		semaphore.set(randomString[(frame / step) % randomString.length]);
-		
-		if((frame / step) > randomString.length) {
-			setRandomString();
-		} // end of if
 	} // end of if
 
+	// reset random string
+	if(random && frame && (frame / step) % randomString.length == 0) {
+		setRandomString();
+	} // end of if
+	
 	// set string letter
 	if(frame % step == 0 && !random)
 		semaphore.set(string[(frame / step) % string.length]);
